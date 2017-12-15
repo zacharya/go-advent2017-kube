@@ -1,7 +1,6 @@
 package main
 
 import (
-  "fmt"
   "net/http"
   log "github.com/sirupsen/logrus"
   "github.com/zacharya/go-advent2017-kube/handlers"
