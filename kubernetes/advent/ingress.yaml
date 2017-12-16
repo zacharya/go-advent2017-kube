@@ -10,9 +10,9 @@ metadata:
 spec:
   backend:
     serviceName: {{ .ServiceName }}
-    ServicePort: 80
+    servicePort: 80
   rules:
-  - host: advent.test
+  - host: minikube
     http:
       paths:
       - path: /

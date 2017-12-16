@@ -29,14 +29,17 @@ run: container
 		-e "PORT=${PORT}" \
 		${APP}:${RELEASE}
 
-minikube: push
+minikube:
 	for t in $(shell find ./kubernetes/advent -type f -name "*.yaml"); do \
 	cat $$t | \
-		sed -E "s\/{\{(\s*)\.Release(\s*)\}\}/${RELEASE}/g" | \
-		sed -E "s/\{\{(\s*)\.ServiceName(\s*)\}\}/$(APP)/g"; \
+		gsed -E "s/\{\{(\s*)\.Release(\s*)\}\}/${RELEASE}/g" | \
+		gsed -E "s/\{\{(\s*)\.ServiceName(\s*)\}\}/$(APP)/g"; \
 	echo ---; \
 	done > tmp.yaml
 	kubectl apply -f tmp.yaml
+	rm tmp.yaml
+
+deploy: push minikube
 
 test:
 	go test -v -race ./...
